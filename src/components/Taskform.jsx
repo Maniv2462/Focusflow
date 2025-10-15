@@ -2,6 +2,7 @@ export default function Taskform(){
     return(
         <form>
             <div>
+                <h1>hiii</h1>
                 <input type="text" placeholder="Enter the task"/>
                 <button type="submit">Add Task</button>
             </div>
