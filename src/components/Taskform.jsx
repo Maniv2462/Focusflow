@@ -1,19 +1,33 @@
-export default function Taskform(){
+import { useState } from "react"
+export default function Taskform({addTask}){
+     const[task,setTask] = useState();
+     const[priority,setPriority]=useState('Medium');
+     const[catagory,setCatagory]=useState('General');
+     
+     const handlesubmit = (e) => {
+        e.preventDefault();//refresh
+        addTask({text: task,priority,catagory,completed:false});
+       //reset
+        setTask('');
+        setPriority('Medium');
+        setCatagory('General');
+     }
     return(
-        <form>
+        <form onSubmit={handlesubmit}>
             <div>
-                <h1>hiii</h1>
-                <input type="text" placeholder="Enter the task"/>
+                <input type="text" placeholder="Enter the task" value={task}
+                onChange={(e)=>setTask(e.target.value)}/>
                 <button type="submit">Add Task</button>
+                
             </div>
             <div>
-                <select name="" id="">
+                <select value={priority} onChange={(e)=>setPriority(e.target.value)}>
                     <option value="High">High</option>
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
                 </select>
 
-                <select name="" id="">
+                <select value={catagory} onChange={(e)=>setCatagory(e.target.value)}>
                     <option value="General">General</option>
                     <option value="Work">Work</option>
                     <option value="Personal">Personal</option>
