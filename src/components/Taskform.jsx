@@ -6,7 +6,7 @@ export default function Taskform({addTask}){
      
      const handlesubmit = (e) => {
         e.preventDefault();//refresh
-        addTask({text: task,priority,catagory,completed:false});
+        addTask({text: task, priority, catagory, completed:false});
        //reset
         setTask('');
         setPriority('Medium');
@@ -15,7 +15,8 @@ export default function Taskform({addTask}){
     return(
         <form onSubmit={handlesubmit}>
             <div>
-                <input type="text" placeholder="Enter the task" value={task}
+                <input type="text" placeholder="Enter the task"
+                value={task}
                 onChange={(e)=>setTask(e.target.value)}/>
                 <button type="submit">Add Task</button>
                 

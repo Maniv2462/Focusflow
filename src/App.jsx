@@ -2,7 +2,9 @@ import Taskform from "./components/Taskform";
 import Tasklist from "./components/Tasklist";
 import Progresstracker from "./components/Progresstracker";
 import { useEffect, useState } from "react";
-function App(){
+import "./Style.css";
+
+export default function App(){
  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -13,17 +15,27 @@ function App(){
   const addTask = (task) => {
     setTasks([...tasks,task]);
   }
+
+  const updateTask = (updatedTask,index) => {
+    const newtask = [...tasks];
+    newtask[index] = updatedTask;
+    setTasks(newtask);
+  }
+
+  const deleteTask = (index) => {
+    setTasks(tasks.filter((_, i) => i != index))
+  }
   
   return (
     <div>
       <h1><i>FocusFlow</i>🎯</h1>
       <p>Stay Focused, Get Things Done</p>
       <Taskform addTask = {addTask}/>
-      <Tasklist />
-      <Progresstracker />
+      <Tasklist tasks = {tasks} 
+      updateTask = {updateTask} 
+      deleteTask = {deleteTask}/>
+      <Progresstracker tasks={tasks}/>
       <button>Clear all Tasks</button>
     </div>
   )
 }
-
-export default App;
