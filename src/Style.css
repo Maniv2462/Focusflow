@@ -1,137 +1,359 @@
-/* Minimal, clean styles for the Task Manager */
+/* App container and basic layout */
+.app-container {
+  max-width: 5000px;
+  margin: 32px auto;
+  padding: 70px;
+  border-radius: 14px;
+  font-family: Arial, sans-serif;
 
-* {
-  box-sizing: border-box;
+  /* Gradient background */
+  background: #474bff;
+  background: -webkit-linear-gradient(0deg, #474bff 0%, #bc48ff 100%);
+  background: linear-gradient(0deg, #474bff 0%, #bc48ff 100%);
+
+  /* Optional for better text visibility */
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background: #f7f7f8;
-  color: #111111;
-}
-
-.App {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-header {
-  margin-bottom: 16px;
-}
-
-header h1 {
-  margin: 0 0 4px 0;
-  font-size: 28px;
-}
-
-header p {
-  margin: 0;
-  color: #555;
-}
-
-.task-form {
+.app-background {
+  background-color: rgb(189, 189, 239); /* navy background */
+  min-height: 100vh;
+  padding: 0px 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 16px 0;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-#inp {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
+.app-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #272b4d;
+  margin: 5px 0 5px 0; /* 5px top margin, 16px bottom margin */
+  padding-top: 0;
+  position: relative;
+  top: 0;
+}
+
+.app-desc {
+  text-align: center;
+  /* text-decoration: solid; - invalid, so removed */
+  color: #091d07;
+  font-size: 0.8rem;
+  margin-bottom: 24px;
+  font-style: italic;
+  margin-top: auto;
+}
+
+
+.clear-btn {
+  margin: 28px auto 0 auto;
+  padding: 9px 18px;
+  background: #e74c3c;
+  color: #fff;
+  font-weight: bold;
+  border: none;
   border-radius: 8px;
-  background: #ffffff;
-}
-
-#inp input {
-  flex: 1;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  font-size: 14px;
-}
-
-#inp button {
-  border: 0;
-  background: #111111;
-  color: #ffffff;
-  padding: 8px 12px;
-  border-radius: 6px;
   cursor: pointer;
+  display: block;
+  transition: background 0.2s;
+}
+.clear-btn:hover {
+  background: #c0392b;
 }
 
-#btns {
+/* ----- Task Form ----- */
+.task-form {
+  margin-bottom: 20px;
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-#btns select {
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  background: #ffffff;
+.task-row {
+  display: flex;
+  gap: 12px;
 }
 
+.task-input {
+  flex: 2;
+  padding: 8px 12px;
+  border: 1px solid #bbb;
+  border-radius: 7px;
+  font-size: 1rem;
+}
+#task-input:focus {
+  outline: 2px solid #27ae60;
+}
+
+.add-btn {
+  background: purple;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: 500;
+}
+
+.add-btn:hover {
+  background: black;
+}
+
+.select-priority,
+.select-category {
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+/* ----- Task List ----- */
 .task-list {
   list-style: none;
   padding: 0;
-  margin: 16px 0;
+  margin-bottom: 14px;
 }
 
-.task-list li {
+.task-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  padding: 12px;
-  border: 1px solid #eeeeee;
-  border-radius: 8px;
-  background: #ffffff;
+  justify-content: space-between;
+  background: #f7f9fc;
+  margin-bottom: 9px;
+  padding: 12px 16px;
+  border-radius: 9px;
+  border: 1px solid #eee;
+  transition: background 0.2s;
 }
 
-.task-list li.completed {
-  text-decoration: line-through;
-  opacity: 0.7;
+/* Updated completed task: blur instead of strike-through */
+.task-item.completed {
+  background: #e0e7ef;
+  text-decoration: none; /* remove strike-through */
+  opacity: 0.8; /* slightly faded */
+  transition: opacity 0.3s;
 }
 
-.task-list button {
-  background: none;
-  border: 0;
-  color: orange;
+/* Apply blur only to the task text, not buttons */
+.task-item.completed .task-details {
+  filter: blur(2px);
+}
+
+/* Default color for task text */
+.task-details span {
+  color: gray;
+}
+
+.task-details {
+  flex: 4;
+  font-size: 1.11rem;
+}
+/* Style for the category text and emoji */
+.task-details small span {
+  font-weight: 600;
+  margin-left: 4px; /* spacing before emoji */
+  color: inherit; /* inherit color from parent (priority color) */
+  display: inline-flex;
+  align-items: center;
+  gap: 4px; /* gap between category and emoji */
+}
+
+/* Optional: slightly increase emoji size for better visibility */
+.task-details small span::after {
+  font-size: 1.1em;
+}
+
+/* Priority-based colors */
+.priority-high .task-details span {
+  color: #FF4C4C;
+}
+.priority-medium .task-details span {
+  color: #FFA500;
+}
+.priority-low .task-details span {
+  color: green;
+}
+
+/* Task time style */
+.task-time {
+  padding: 7px 10px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 130px; /* reasonable width for time input */
   cursor: pointer;
-  padding: 6px 8px;
-  border-radius: 6px;
+  color: rgb(18, 211, 211);
+}
+.task-details small {
+  font-weight: 600;
+  /* Remove color here to allow inline styling */
 }
 
+.task-details span,
+.task-time {
+  /* Already handled via priority classes and white for time */
+  /* If you want time color different, override here */
+}
+
+/* Optional: Focus style for accessibility */
+.task-time:focus {
+  outline: 2px solid #27ae60;
+}
+
+.task-actions {
+  flex: 2;
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-btn {
+  background: #2980b9;
+  color: #fff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.99rem;
+  transition: background 0.2s;
+}
+.toggle-btn:hover {
+  background: #20609b;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.99rem;
+  transition: background 0.2s;
+}
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+/* ----- Progress Tracker ----- */
 .progress-tracker {
-  margin-top: 16px;
+  margin: 16px 0 20px 0;
+  padding: 14px 0;
 }
 
 .progress-bar {
-  height: 8px;
-  background: #cb1111;
-  border-radius: 999px;
+  width: 100%;
+  background: #ecedf0;
+  border-radius: 8px;
+  height: 16px;
+  margin-top: 6px;
   overflow: hidden;
 }
 
 .progress {
   height: 100%;
-  background: #16a34a;
+  background: linear-gradient(90deg, #27ae60 70%, #24924d 100%);
+  transition: width 0.3s ease;
+  border-radius: 8px 0 0 8px;
 }
 
-.clear-btn {
-  margin-top: 16px;
-  background: #dc2626;
-  color: #ffffff;
-  border: 0;
-  padding: 10px 14px;
-  border-radius: 6px;
-  cursor: pointer;
+.progress-text {
+  font-size: 1.06rem;
+  color: #555;
+  margin-bottom: 7px;
+}
+
+/* IDs for targeting if needed */
+#focusflow-root {}
+#form-task {}
+#list-tasks {}
+#progress-indicator {}
+
+/* ------------------ Responsive Styling ------------------ */
+
+/* Small devices (max width 480px) */
+@media (max-width: 480px) {
+  .app-container {
+    max-width: 100%;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .app-title {
+    font-size: 1.8rem;
+  }
+  .app-desc {
+    font-size: 0.7rem;
+  }
+
+  .task-form {
+    gap: 8px;
+  }
+
+  /* Stack fields vertically in the task form */
+  .task-row {
+    flex-direction: column;
+  }
+
+  .task-input {
+    width: 100%;
+  }
+
+  .add-btn {
+    width: 100%;
+    padding: 8px;
+  }
+
+  /* Task list item wrap and align items flex-start */
+  .task-item {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  /* Task text container takes majority width */
+  .task-details {
+    flex: 1 1 60%;
+    min-width: 60%;
+    font-size: 1rem;
+  }
+
+  /* Time input fixed width with margin */
+  .task-time {
+    flex: 0 0 35%;
+    min-width: 130px;
+    margin-top: 6px;
+  }
+
+  /* Buttons full width under task text on mobile */
+  .task-actions {
+    width: 100%;
+    margin-top: 10px;
+    justify-content: space-between;
+  }
+
+  .toggle-btn,
+  .delete-btn {
+    flex: 1;
+    font-size: 0.85rem;
+    padding: 6px;
+    margin: 0 6px;
+  }
+}
+
+/* Medium devices (min-width: 481px and max-width: 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .app-title {
+    font-size: 2rem;
+  }
+  .app-desc {
+    font-size: 0.8rem;
+  }
 }

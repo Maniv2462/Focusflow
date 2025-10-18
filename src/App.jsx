@@ -4,44 +4,46 @@ import Progresstracker from "./components/Progresstracker";
 import { useEffect, useState } from "react";
 import "./Style.css";
 
-export default function App(){
- const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    localStorage.setItem
-    ("tasks", JSON.stringify(tasks))
+export default function App() {
+  const [tasks, setTasks] = useState(() => {
+    // Load tasks from localStorage initially if available
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
-  const addTask = (task) => {
-    setTasks([...tasks,task]);
-  }
+  useEffect(() => {
+    // Save tasks to localStorage whenever tasks state changes
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-  const updateTask = (updatedTask,index) => {
-    const newtask = [...tasks];
-    newtask[index] = updatedTask;
-    setTasks(newtask);
-  }
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
+  const updateTask = (updatedTask, index) => {
+    const newTasks = [...tasks];
+    newTasks[index] = updatedTask;
+    setTasks(newTasks);
+  };
 
   const deleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i != index))
-  }
-  
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
+
   const clearTasks = () => {
     setTasks([]);
-  }
+  };
+
   return (
-    <div className="App">
-      <header>
-        <h1 className="title"><i>FocusFlow</i>🎯</h1>
-        <p className="tagline">Stay Focused, Get Things Done</p>
-      </header>
-      <Taskform addTask = {addTask}/>
-      <Tasklist tasks = {tasks} 
-      updateTask = {updateTask} 
-      deleteTask = {deleteTask}/>
-      <Progresstracker tasks={tasks}/>
-      {tasks.length>0&&(<button onClick={clearTasks} className="clear-btn">Clear all Tasks</button>)}
-      
+    <div className="app-background">
+      <div className="app-container" id="focusflow-root">
+        <h1 className="app-title"><i>FocusFlow</i>🎯</h1>
+        <h6 className="app-desc">Stay Focused, Get Things Done</h6>
+        <Taskform addTask={addTask} />
+        <Tasklist tasks={tasks} updateTask={updateTask} deleteTask={deleteTask} />
+        <Progresstracker tasks={tasks} />
+        <button className="clear-btn" onClick={clearTasks}>Clear all Tasks</button>
+      </div>
     </div>
-  )
+  );
 }
