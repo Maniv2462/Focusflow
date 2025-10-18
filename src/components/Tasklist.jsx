@@ -4,9 +4,9 @@ export default function Tasklist({tasks, updateTask, deleteTask}){
             updateTask(updatedTask,index);
     }
     return(
-        <ul>
+        <ul className="task-list">
             {tasks.map((task,index) =>(
-                <li key={index}>
+                <li key={index} className={task.completed ?"completed":""}>
                      <div>
                         <span>{task.text}
                            <small>({task.priority},{task.catagory})</small>
